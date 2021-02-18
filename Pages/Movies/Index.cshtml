@@ -1,0 +1,83 @@
+﻿@page "/{id:int?}"
+@model Constantin_Mihai_proiect.Pages.Movies.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].Director)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].IMDBRatings)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].ProductionCo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].Developer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].MovieGenres)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MovieD.Movies)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.MovieID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Director)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IMDBRatings)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductionCo.ProductionCoName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Developer.DeveloperName)
+                </td>
+                <td>
+                    @{
+                        foreach (var genre in item.MovieGenres)
+                        {
+                            @genre.Genre.ID @: @genre.Genre.GenreName <br />
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
